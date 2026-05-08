@@ -4,12 +4,9 @@
   margin: 0 auto;
 }
 
-.vagasSection {
-  text-align: center;
-}
-
 .vagasSection h2 {
-  color: #043365;
+  text-align: center;
+  color: #37393a;
   margin-top: 10px;
 }
 
@@ -60,7 +57,7 @@
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
   text-align: left;
-  border-top: 5px solid #e79e01; /* Cor laranja das datas */
+  border-top: 5px solid #e79e01; 
 }
 
 .cardVaga h3 {
