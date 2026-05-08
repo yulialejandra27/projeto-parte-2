@@ -1,0 +1,112 @@
+.mainContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.contentWrapper {
+  display: flex;
+  gap: 40px;
+  margin-top: 20px;
+}
+
+.sectionEventos {
+  flex: 2;
+}
+
+.formularioHome {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 30px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.inputField {
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.btnSubmit {
+  background-color: #1b84da;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.buscaContainer {
+  margin: 20px 0;
+  width: 100%;
+}
+
+.inputBusca {
+  width: 100%;
+  padding: 12px 20px;
+  border: 2px solid #efad60;
+  border-radius: 25px;
+  font-size: 1rem;
+  outline: none;
+}
+
+.cardEvento {
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  border-left: 5px solid #e79e01;
+}
+
+.btnRemover {
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  margin-top: 15px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: normal;
+  transition: 0.3s;
+}
+
+.btnRemover:hover {
+  background-color: #cc0000;
+}
+
+.asideInfo {
+  flex: 1;
+  background-color: #ffffff;
+  padding: 25px;
+  border-radius: 10px;
+  height: fit-content;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.asideInfo h3 {
+  color: rgb(0, 0, 0);
+  margin-top: 20px;
+  margin-bottom: 10px;
+  padding-top: 10px;
+  border-top: 2px solid #efad60;
+}
+
+.asideInfo p {
+  margin-bottom: 15px;
+  font-size: 0.95rem;
+  color: #000000;
+  text-align: justify;
+  line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+  .contentWrapper {
+    flex-direction: column;
+  }
+}

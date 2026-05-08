@@ -1,48 +1,111 @@
-body {
-  font-family: Arial;
-  background: #fff3e0; /* fundo claro laranja */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.menu {
-  background: #ff9800; /* laranja */
+:root {
+  --cor-fundo: #efad60;
+  --cor-primaria: #1b84da;
+  --cor-secundaria: #e79e01;
+  --cor-texto-escuro: #043365;
+}
+
+body {
+  background-color: var(--cor-fundo);
+  font-family: Arial, Helvetica, sans-serif;
+  color: #333;
+  line-height: 1.6;
+}
+
+/* 2. ESTILOS DO LAYOUT (HEADER E FOOTER) */
+header.menu {
+  background-color: #ffffff;
+  padding: 20px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.titulo {
+  font-family: Cambria, Georgia, serif;
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--cor-primaria);
+}
+
+.titulo span {
+  color: var(--cor-secundaria);
+}
+
+.menu-link .links {
+  text-decoration: none;
+  color: var(--cor-primaria);
+  font-weight: bold;
+  border: 2px solid var(--cor-primaria);
+  padding: 8px 20px;
+  border-radius: 5px;
+  transition: 0.3s;
+}
+
+.menu-link .links:hover {
+  background-color: var(--cor-primaria);
   color: white;
-  padding: 15px;
+}
+
+footer {
+  background-color: #ffffff;
+  text-align: center;
+  padding: 30px;
+  margin-top: 50px;
+  font-size: 0.9rem;
+}
+
+/* 3. MENU HOME/VAGAS/DATAS */
+.pesquisa {
+  text-align: center;
+  margin: 20px 0;
 }
 
 .pesquisa ul {
-  display: flex;
-  gap: 15px;
   list-style: none;
-  padding: 10px;
-  background: #ffcc80; /* laranja claro */
-}
-
-.container {
-  max-width: 900px;
-  margin: auto;
-  padding: 20px;
-}
-
-form {
   display: flex;
-  flex-direction: column;
-  gap: 10px;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
 }
 
-input {
-  padding: 10px;
+.pesquisa a {
+  text-decoration: none;
+  background-color: #f0f0f0;
+  color: var(--cor-texto-escuro);
+  padding: 10px 25px;
+  border-radius: 30px;
+  transition: 0.3s;
 }
 
-button {
-  padding: 10px;
-  background: #ff5722; /* botão laranja */
+.pesquisa a.selected {
+  background-color: orangered;
   color: white;
-  border: none;
 }
 
-.vaga-item {
-  background: white;
-  margin-top: 10px;
-  padding: 10px;
-  border-left: 5px solid #ff9800;
+.pesquisa a:hover {
+  background-color: var(--cor-texto-escuro);
+  color: white;
+}
+
+@media (max-width: 768px) {
+  header.menu {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+  }
 }
