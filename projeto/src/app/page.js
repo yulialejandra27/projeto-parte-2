@@ -13,25 +13,56 @@ export default function Home() {
   const tipoPagina = 'eventos';
 
   useEffect(() => {
-    const dados = localStorage.getItem(tipoPagina);
-    if (dados) setEventos(JSON.parse(dados));
+    const carregarEventos = async () => {
+      try {
+        const response = await fetch('/api/eventos');
+        const data = await response.json();
+        setEventos(data.eventos);
+      } catch (error) {
+        console.error('Erro ao carregar eventos:', error);
+      }
+    };
+    carregarEventos();
   }, []);
 
   useEffect(() => {
-    localStorage.setItem(tipoPagina, JSON.stringify(eventos));
+    // Não precisa mais salvar no localStorage, a API cuida disso
   }, [eventos]);
 
-  const handleAddEvento = (e) => {
+  const handleAddEvento = async (e) => {
     e.preventDefault();
     if (!descricao.trim()) return alert("Digite uma descrição!");
 
     const novo = { descricao, link, data };
-    setEventos([...eventos, novo].sort((a, b) => new Date(a.data) - new Date(b.data)));
-    setDescricao(''); setLink(''); setData('');
+    
+    try {
+      const response = await fetch('/api/eventos', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'add', evento: novo })
+      });
+      const data = await response.json();
+      setEventos(data.eventos);
+      setDescricao(''); setLink(''); setData('');
+    } catch (error) {
+      console.error('Erro ao adicionar evento:', error);
+      alert('Erro ao adicionar evento');
+    }
   };
 
-  const remover = (index) => {
-    setEventos(eventos.filter((_, i) => i !== index));
+  const remover = async (index) => {
+    try {
+      const response = await fetch('/api/eventos', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'remove', index })
+      });
+      const data = await response.json();
+      setEventos(data.eventos);
+    } catch (error) {
+      console.error('Erro ao remover evento:', error);
+      alert('Erro ao remover evento');
+    }
   };
 
   const eventosFiltrados = eventos.filter(ev => 
