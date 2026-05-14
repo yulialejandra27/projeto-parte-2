@@ -25,7 +25,7 @@ export default function Cadastro() {
 
           <div className={styles.formGroup}>
             <label htmlFor="ong">Nome da sua ONG (Opcional)</label>
-            <input id="ong" type="text" placeholder="Se possuir uma" />
+            <input id="ong" type="text" placeholder="Digite a sua ONG" />
           </div>
 
           <button type="submit" className={styles.btnEnviar}>

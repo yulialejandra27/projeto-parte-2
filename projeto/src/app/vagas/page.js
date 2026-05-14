@@ -64,7 +64,7 @@ export default function Vagas() {
           <input 
             className={styles.inputField}
             type="text" 
-            placeholder="Link ou Contacto" 
+            placeholder="Contacto" 
             value={link} 
             onChange={(e) => setLink(e.target.value)} 
           />
@@ -81,7 +81,7 @@ export default function Vagas() {
           {meusCartoes.map((cartao, index) => (
             <div key={index} className={styles.cardVaga}>
               <h3>{cartao.descricao}</h3>
-              <p><strong>Info:</strong> {cartao.link}</p>
+              <p><strong>Informação:</strong> {cartao.link}</p>
               <p><strong>Data:</strong> {cartao.data}</p>
               <button className={styles.btnRemover} onClick={() => remover(index)}>
                 Remover Vaga
