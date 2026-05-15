@@ -4,6 +4,9 @@ import Link from "next/link";
 export const metadata = {
   title: "Mural da Comunidade",
   description: "Plataforma colaborativa para eventos e vagas locais",
+  icons: {
+    icon: "/logo.png",
+  },
 };
 
 export default function RootLayout({ children }) {
