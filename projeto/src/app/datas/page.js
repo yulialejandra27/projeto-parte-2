@@ -11,26 +11,57 @@ export default function Datas() {
   const tipoPagina = 'datas_comemorativas';
 
   useEffect(() => {
-    const dados = localStorage.getItem(tipoPagina);
-    if (dados) setMinhasDatas(JSON.parse(dados));
+    const carregarDatas = async () => {
+      try {
+        const response = await fetch('/api/datas');
+        const data = await response.json();
+        setMinhasDatas(data.datas);
+      } catch (error) {
+        console.error('Erro ao carregar datas:', error);
+      }
+    };
+    carregarDatas();
   }, []);
 
   useEffect(() => {
-    localStorage.setItem(tipoPagina, JSON.stringify(minhasDatas));
+    // Não precisa mais salvar no localStorage, a API cuida disso
   }, [minhasDatas]);
 
-  const handleAddData = (e) => {
+  const handleAddData = async (e) => {
     e.preventDefault();
     if (!descricao.trim() || !data) return alert("Preencha tudo!");
 
     const novaData = { descricao, data };
-    setMinhasDatas([...minhasDatas, novaData].sort((a, b) => new Date(a.data) - new Date(b.data)));
-    setDescricao('');
-    setData('');
+    
+    try {
+      const response = await fetch('/api/datas', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'add', data: novaData })
+      });
+      const result = await response.json();
+      setMinhasDatas(result.datas);
+      setDescricao('');
+      setData('');
+    } catch (error) {
+      console.error('Erro ao adicionar data:', error);
+      alert('Erro ao adicionar data');
+    }
   };
 
-  const remover = (index) => {
-    setMinhasDatas(minhasDatas.filter((_, i) => i !== index));
+  const remover = async (index) => {
+    try {
+      const response = await fetch('/api/datas', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'remove', index })
+      });
+      const result = await response.json();
+      setMinhasDatas(result.datas);
+    } catch (error) {
+      console.error('Erro ao remover data:', error);
+      alert('Erro ao remover data');
+    }
   };
 
   return (
