@@ -4,8 +4,12 @@ import { join } from 'path';
 const dataFilePath = join(process.cwd(), 'public', 'vagas.json');
 
 async function getVagas() {
-  const data = await readFile(dataFilePath, 'utf-8').catch(() => '[]');
-  return JSON.parse(data);
+  try {
+    const data = await readFile(dataFilePath, 'utf-8');
+    return JSON.parse(data);
+  } catch (error) {
+    return [];
+  }
 }
 
 async function saveVagas(vagas) {
@@ -13,23 +17,31 @@ async function saveVagas(vagas) {
 }
 
 export async function GET() {
-  const vagas = await getVagas();
-  return Response.json({ vagas });
+  try {
+    const vagas = await getVagas();
+    return Response.json({ vagas });
+  } catch (error) {
+    return Response.json({ error: 'Erro ao ler vagas' }, { status: 500 });
+  }
 }
 
 export async function POST(request) {
-  const body = await request.json();
-  const { action, vaga, index } = body;
+  try {
+    const body = await request.json();
+    const { action, vaga, index } = body;
 
-  let vagas = await getVagas();
+    let vagas = await getVagas();
 
-  if (action === 'add') {
-    vagas.push(vaga);
-    vagas.sort((a, b) => new Date(a.data) - new Date(b.data));
-  } else if (action === 'remove') {
-    vagas = vagas.filter((_, i) => i !== index);
+    if (action === 'add') {
+      vagas.push(vaga);
+      vagas.sort((a, b) => new Date(a.data) - new Date(b.data));
+    } else if (action === 'remove') {
+      vagas = vagas.filter((_, i) => i !== index);
+    }
+
+    await saveVagas(vagas);
+    return Response.json({ vagas });
+  } catch (error) {
+    return Response.json({ error: 'Erro ao processar vagas' }, { status: 500 });
   }
-
-  await saveVagas(vagas);
-  return Response.json({ vagas });
 }
