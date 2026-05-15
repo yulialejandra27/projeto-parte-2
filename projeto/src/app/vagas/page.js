@@ -13,13 +13,9 @@ export default function Vagas() {
 
   useEffect(() => {
     const carregarVagas = async () => {
-      try {
-        const response = await fetch('/api/vagas');
-        const data = await response.json();
-        setMeusCartoes(data.vagas);
-      } catch (error) {
-        console.error('Erro ao carregar vagas:', error);
-      }
+      const response = await fetch('/api/vagas');
+      const data = await response.json();
+      setMeusCartoes(data.vagas);
     };
     carregarVagas();
   }, []);
@@ -36,35 +32,24 @@ export default function Vagas() {
     }
     
     const novo = { descricao, link, data };
-    
-    try {
-      const response = await fetch('/api/vagas', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action: 'add', vaga: novo })
-      });
-      const result = await response.json();
-      setMeusCartoes(result.vagas);
-      setDescricao(''); setLink(''); setData('');
-    } catch (error) {
-      console.error('Erro ao adicionar vaga:', error);
-      alert('Erro ao adicionar vaga');
-    }
+    const response = await fetch('/api/vagas', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'add', vaga: novo })
+    });
+    const result = await response.json();
+    setMeusCartoes(result.vagas);
+    setDescricao(''); setLink(''); setData('');
   };
 
   const remover = async (index) => {
-    try {
-      const response = await fetch('/api/vagas', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action: 'remove', index })
-      });
-      const result = await response.json();
-      setMeusCartoes(result.vagas);
-    } catch (error) {
-      console.error('Erro ao remover vaga:', error);
-      alert('Erro ao remover vaga');
-    }
+    const response = await fetch('/api/vagas', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'remove', index })
+    });
+    const result = await response.json();
+    setMeusCartoes(result.vagas);
   };
 
   return (

@@ -14,13 +14,9 @@ export default function Home() {
 
   useEffect(() => {
     const carregarEventos = async () => {
-      try {
-        const response = await fetch('/api/eventos');
-        const data = await response.json();
-        setEventos(data.eventos);
-      } catch (error) {
-        console.error('Erro ao carregar eventos:', error);
-      }
+      const response = await fetch('/api/eventos');
+      const data = await response.json();
+      setEventos(data.eventos);
     };
     carregarEventos();
   }, []);
@@ -34,35 +30,24 @@ export default function Home() {
     if (!descricao.trim()) return alert("Digite uma descrição!");
 
     const novo = { descricao, link, data };
-    
-    try {
-      const response = await fetch('/api/eventos', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action: 'add', evento: novo })
-      });
-      const data = await response.json();
-      setEventos(data.eventos);
-      setDescricao(''); setLink(''); setData('');
-    } catch (error) {
-      console.error('Erro ao adicionar evento:', error);
-      alert('Erro ao adicionar evento');
-    }
+    const response = await fetch('/api/eventos', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'add', evento: novo })
+    });
+    const data = await response.json();
+    setEventos(data.eventos);
+    setDescricao(''); setLink(''); setData('');
   };
 
   const remover = async (index) => {
-    try {
-      const response = await fetch('/api/eventos', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action: 'remove', index })
-      });
-      const data = await response.json();
-      setEventos(data.eventos);
-    } catch (error) {
-      console.error('Erro ao remover evento:', error);
-      alert('Erro ao remover evento');
-    }
+    const response = await fetch('/api/eventos', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'remove', index })
+    });
+    const data = await response.json();
+    setEventos(data.eventos);
   };
 
   const eventosFiltrados = eventos.filter(ev => 
