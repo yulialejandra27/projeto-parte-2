@@ -12,13 +12,9 @@ export default function Datas() {
 
   useEffect(() => {
     const carregarDatas = async () => {
-      try {
-        const response = await fetch('/api/datas');
-        const data = await response.json();
-        setMinhasDatas(data.datas);
-      } catch (error) {
-        console.error('Erro ao carregar datas:', error);
-      }
+      const response = await fetch('/api/datas');
+      const data = await response.json();
+      setMinhasDatas(data.datas);
     };
     carregarDatas();
   }, []);
@@ -32,36 +28,25 @@ export default function Datas() {
     if (!descricao.trim() || !data) return alert("Preencha tudo!");
 
     const novaData = { descricao, data };
-    
-    try {
-      const response = await fetch('/api/datas', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action: 'add', data: novaData })
-      });
-      const result = await response.json();
-      setMinhasDatas(result.datas);
-      setDescricao('');
-      setData('');
-    } catch (error) {
-      console.error('Erro ao adicionar data:', error);
-      alert('Erro ao adicionar data');
-    }
+    const response = await fetch('/api/datas', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'add', data: novaData })
+    });
+    const result = await response.json();
+    setMinhasDatas(result.datas);
+    setDescricao('');
+    setData('');
   };
 
   const remover = async (index) => {
-    try {
-      const response = await fetch('/api/datas', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action: 'remove', index })
-      });
-      const result = await response.json();
-      setMinhasDatas(result.datas);
-    } catch (error) {
-      console.error('Erro ao remover data:', error);
-      alert('Erro ao remover data');
-    }
+    const response = await fetch('/api/datas', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'remove', index })
+    });
+    const result = await response.json();
+    setMinhasDatas(result.datas);
   };
 
   return (
