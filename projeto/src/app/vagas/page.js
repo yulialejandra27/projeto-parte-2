@@ -13,9 +13,13 @@ export default function Vagas() {
 
   useEffect(() => {
     const carregarVagas = async () => {
-      const response = await fetch('/api/vagas');
-      const data = await response.json();
-      setMeusCartoes(data.vagas);
+      try {
+        const response = await fetch('/api/vagas');
+        const data = await response.json();
+        setMeusCartoes(data.vagas);
+      } catch (error) {
+        console.error('Erro ao carregar vagas:', error);
+      }
     };
     carregarVagas();
   }, []);
@@ -32,24 +36,34 @@ export default function Vagas() {
     }
     
     const novo = { descricao, link, data };
-    const response = await fetch('/api/vagas', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ action: 'add', vaga: novo })
-    });
-    const result = await response.json();
-    setMeusCartoes(result.vagas);
-    setDescricao(''); setLink(''); setData('');
+    try {
+      const response = await fetch('/api/vagas', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'add', vaga: novo })
+      });
+      const result = await response.json();
+      setMeusCartoes(result.vagas);
+      setDescricao(''); setLink(''); setData('');
+    } catch (error) {
+      console.error('Erro ao adicionar vaga:', error);
+      alert('Erro ao adicionar vaga');
+    }
   };
 
   const remover = async (index) => {
-    const response = await fetch('/api/vagas', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ action: 'remove', index })
-    });
-    const result = await response.json();
-    setMeusCartoes(result.vagas);
+    try {
+      const response = await fetch('/api/vagas', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'remove', index })
+      });
+      const result = await response.json();
+      setMeusCartoes(result.vagas);
+    } catch (error) {
+      console.error('Erro ao remover vaga:', error);
+      alert('Erro ao remover vaga');
+    }
   };
 
   return (
@@ -80,7 +94,7 @@ export default function Vagas() {
           <input 
             className={styles.inputField}
             type="text" 
-            placeholder="Contacto" 
+            placeholder="Contato" 
             value={link} 
             onChange={(e) => setLink(e.target.value)} 
           />
@@ -97,7 +111,7 @@ export default function Vagas() {
           {meusCartoes.map((cartao, index) => (
             <div key={index} className={styles.cardVaga}>
               <h3>{cartao.descricao}</h3>
-              <p><strong>Informação:</strong> {cartao.link}</p>
+              <p><strong>Contato:</strong> {cartao.link}</p>
               <p><strong>Data:</strong> {cartao.data}</p>
               <button className={styles.btnRemover} onClick={() => remover(index)}>
                 Remover Vaga
